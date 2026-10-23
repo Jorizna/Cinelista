@@ -1,0 +1,66 @@
+/* Paleta de 2 colores (negro y blanco); los grises se derivan de ellos */
+:root {
+    --color-primario: #000000;
+    --color-secundario: #ffffff;
+    --gris-medio: color-mix(in srgb, var(--color-primario) 50%, var(--color-secundario));
+    --gris-claro: color-mix(in srgb, var(--color-primario) 22%, var(--color-secundario));
+    --fuente-principal: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+    font-family: var(--fuente-principal);
+    color: var(--color-primario);
+    background: var(--color-secundario);
+}
+
+/* Barra de navegacion */
+.barra-cine { background: var(--color-primario); }
+.barra-cine .navbar-brand { font-weight: 700; letter-spacing: .05em; }
+.barra-cine .nav-link { color: var(--gris-claro); }
+.barra-cine .nav-link:hover,
+.barra-cine .nav-link.active { color: var(--color-secundario); border-bottom: 2px solid var(--color-secundario); }
+
+/* Titulo de pagina: caja gris centrada, como en el wireframe */
+.titulo-pagina {
+    display: inline-block;
+    margin: 0;
+    padding: .6rem 2.5rem;
+    font-size: 1.6rem;
+    color: var(--color-secundario);
+    background: var(--gris-medio);
+    border: 1px solid var(--color-primario);
+    border-radius: 2px;
+}
+
+/* Botones negros */
+.btn-cine {
+    color: var(--color-secundario);
+    background: var(--color-primario);
+    border: 1px solid var(--color-primario);
+    border-radius: 2px;
+}
+.btn-cine:hover, .btn-cine:focus {
+    color: var(--color-primario);
+    background: var(--color-secundario);
+    border-color: var(--color-primario);
+}
+
+/* Tabla: cabecera negra y filas alternas gris / blanco */
+.tabla-cine { margin-bottom: 0; }
+.tabla-cine thead th {
+    color: var(--color-secundario);
+    background: var(--color-primario);
+    text-align: center;
+    vertical-align: middle;
+}
+.tabla-cine td { text-align: center; vertical-align: middle; }
+.tabla-cine tbody tr:nth-child(odd) td { background: var(--gris-claro); }
+.tabla-cine tbody tr:nth-child(even) td { background: var(--color-secundario); }
+.tabla-cine .estrellas { letter-spacing: .1em; white-space: nowrap; }
+.tabla-cine form { margin: 0; }
+
+/* Formulario */
+.formulario-cine { max-width: 600px; }
+.formulario-cine .form-control:focus,
+.formulario-cine .form-select:focus { border-color: var(--color-primario); box-shadow: 0 0 0 .2rem var(--gris-claro); }
+.formulario-cine .form-check-input:checked { background-color: var(--color-primario); border-color: var(--color-primario); }

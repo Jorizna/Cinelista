@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CineLista - Añadir título</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<div th:replace="~{fragments/nav :: nav}"></div>
+
+<main class="container my-4">
+
+    <div class="text-center mb-4">
+        <h1 class="titulo-pagina">Añadir título</h1>
+    </div>
+
+    <form class="formulario-cine mx-auto" th:action="@{/anadir-titulo}" th:object="${pelicula}" method="post">
+
+        <div class="mb-3">
+            <label for="titulo" class="form-label">Título</label>
+            <input type="text" class="form-control" id="titulo" th:field="*{titulo}" maxlength="100" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="genero" class="form-label">Género</label>
+            <select class="form-select" id="genero" th:field="*{genero}" required>
+                <option value="">Selecciona un género</option>
+                <option value="Acción">Acción</option>
+                <option value="Aventura">Aventura</option>
+                <option value="Animación">Animación</option>
+                <option value="Ciencia ficción">Ciencia ficción</option>
+                <option value="Comedia">Comedia</option>
+                <option value="Drama">Drama</option>
+                <option value="Fantasía">Fantasía</option>
+                <option value="Terror">Terror</option>
+                <option value="Thriller">Thriller</option>
+                <option value="Documental">Documental</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label for="plataforma" class="form-label">Plataforma</label>
+            <select class="form-select" id="plataforma" th:field="*{plataforma}" required>
+                <option value="">Selecciona una plataforma</option>
+                <option value="Netflix">Netflix</option>
+                <option value="Prime Video">Prime Video</option>
+                <option value="Disney+">Disney+</option>
+                <option value="Max">Max</option>
+                <option value="Movistar+">Movistar+</option>
+                <option value="Filmin">Filmin</option>
+                <option value="Cine">Cine</option>
+                <option value="Otra">Otra</option>
+            </select>
+        </div>
+
+        <fieldset class="mb-3">
+            <legend class="form-label fs-6">Estado</legend>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="estado-vista" th:field="*{estado}" value="vista">
+                <label class="form-check-label" for="estado-vista">Vista</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="estado-pendiente" th:field="*{estado}" value="pendiente">
+                <label class="form-check-label" for="estado-pendiente">No vista</label>
+            </div>
+        </fieldset>
+
+        <div class="mb-4">
+            <label for="valoracion" class="form-label">Valoración</label>
+            <select class="form-select" id="valoracion" th:field="*{valoracion}">
+                <option value="0">Sin valorar</option>
+                <option value="1">★☆☆☆☆</option>
+                <option value="2">★★☆☆☆</option>
+                <option value="3">★★★☆☆</option>
+                <option value="4">★★★★☆</option>
+                <option value="5">★★★★★</option>
+            </select>
+        </div>
+
+        <button type="submit" id="btn-guardar" name="btn-guardar" class="btn btn-cine">Guardar</button>
+        <a th:href="@{/mi-lista}" class="btn btn-outline-dark">Cancelar</a>
+    </form>
+
+</main>
+
+</body>
+</html>

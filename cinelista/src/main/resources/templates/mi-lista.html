@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CineLista - Mi lista</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<div th:replace="~{fragments/nav :: nav}"></div>
+
+<main class="container my-4" id="contenedor-principal">
+
+    <div class="text-center mb-4">
+        <h1 class="titulo-pagina" id="titulo-pagina">Mi lista</h1>
+    </div>
+
+    <!--BOTÓN AUTOGENERADO-->
+    <div class="d-flex mb-3">
+        <a id="btn-anadir" name="btn-anadir" class="btn btn-cine" th:href="@{/anadir-titulo}">Añadir</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered tabla-cine" id="tabla-peliculas">
+            <thead>
+            <tr>
+                <th>Título</th>
+                <th>Género</th>
+                <th>Plataforma</th>
+                <th>Estado</th>
+                <th>Valoración</th>
+                <th>Eliminar</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="p : ${peliculas}">
+                <td th:text="${p.titulo}">Nombre Película</td>
+                <td th:text="${p.genero}">Género Película</td>
+                <td th:text="${p.plataforma}">Plataforma Película</td>
+
+                <td>
+                    <span th:if="${p.estado == 'vista'}">Vista</span>
+                    <span th:unless="${p.estado == 'vista'}">No Vista</span>
+                </td>
+
+                <td class="estrellas" th:switch="${p.valoracion}">
+                    <span th:case="0">☆☆☆☆☆</span>
+                    <span th:case="1">★☆☆☆☆</span>
+                    <span th:case="2">★★☆☆☆</span>
+                    <span th:case="3">★★★☆☆</span>
+                    <span th:case="4">★★★★☆</span>
+                    <span th:case="5">★★★★★</span>
+                </td>
+
+                <td>
+                    <form th:action="@{/mi-lista/eliminar/{id}(id=${p.id})}" method="post">
+                        <button type="submit" class="btn btn-cine btn-sm">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+
+            <tr th:if="${peliculas.isEmpty()}">
+                <td colspan="6" class="text-muted">Todavía no hay películas registradas.</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</main>
+
+</body>
+</html>

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-
 @Controller
 public class PeliculaController {
 
@@ -40,6 +39,7 @@ public class PeliculaController {
 
     @PostMapping("/anadir-titulo")
     public String guardar(@ModelAttribute Pelicula pelicula) {
+        // La valoracion se limita al rango 0-5 (estrellas)
         int v = pelicula.getValoracion() == null ? 0 : pelicula.getValoracion();
         pelicula.setValoracion(Math.max(0, Math.min(5, v)));
         peliculaRepository.save(pelicula);
@@ -50,5 +50,11 @@ public class PeliculaController {
     public String eliminar(@PathVariable Long id) {
         peliculaRepository.deleteById(id);
         return "redirect:/mi-lista";
+    }
+
+    @GetMapping("/estadisticas")
+    public String estadisticas(Model model) {
+        model.addAttribute("activa", "estadisticas");
+        return "estadisticas";
     }
 }

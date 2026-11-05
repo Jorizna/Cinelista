@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>CineLista - Estadísticas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <th:block th:replace="~{fragments/cabecera :: comunes}"></th:block>
+
+    <!-- DataTables (y jQuery) -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.2.0/css/buttons.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.0/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.html5.min.js"></script>
+</head>
+<body>
+
+<div th:replace="~{fragments/nav :: nav}"></div>
+
+<main class="container my-4 contenedor-estadisticas">
+
+    <div class="text-center mb-2">
+        <h1 class="titulo-pagina">Estadísticas</h1>
+    </div>
+
+    <p class="text-center fw-bold">Miguel Ollés, Jorge Izquierdo P3</p>
+
+    <table id="tabla-estadisticas" class="display" style="width:100%">
+        <thead>
+        <tr>
+            <th>Título</th>
+            <th>Género</th>
+            <th>Taquilla</th>
+            <th>Valoración</th>
+        </tr>
+        </thead>
+        <tfoot>
+        <tr>
+            <th colspan="2" style="text-align:right">Total taquilla (millones):</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </tfoot>
+    </table>
+
+</main>
+
+<script>
+    $(document).ready(function () {
+        $('#tabla-estadisticas').DataTable({
+            // Ejercicio 2: los datos se piden a la API REST
+            ajax: { url: '/api/estadisticas', dataSrc: 'data' },
+            columns: [
+                { data: 'titulo' },
+                { data: 'genero' },
+                { data: 'taquilla' },
+
+                {   // Ejercicio 5: columna grafica (estrellas)
+                    data: 'valoracion',
+                    render: function (data, type) {
+                        if (type !== 'display') return data;
+                        return '<span class="estrellas-tabla">' + '★'.repeat(data) + '☆'.repeat(5 - data) + '</span>';
+                    }
+                }
+            ],
+            // Ejercicio 3: buscador / filtro de DataTables
+            searching: true,
+            language: { search: 'Buscar:' },
+
+            // Ejercicio 4: suma de la columna taquilla en el pie
+            footerCallback: function () {
+                const api = this.api();
+                const total = api.column(2, { search: 'applied' }).data()
+                    .reduce(function (a, b) { return Number(a) + Number(b); }, 0);
+                $(api.column(2).footer()).html(total);
+            },
+
+            // Ejercicio 7: boton CSV con nombre de fichero personalizado
+            layout: { topStart: 'buttons' },
+            buttons: [
+                {
+                    extend: 'csvHtml5',
+                    text: 'Exportar CSV',
+                    filename: 'cinelista_estadisticas',
+                    charset: 'utf-8',
+                    bom: true,
+                    fieldSeparator: ';',
+                    exportOptions: { orthogonal: 'export' }
+                }
+            ]
+        });
+    });
+</script>
+
+</body>
+</html>

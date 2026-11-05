@@ -64,3 +64,7 @@ body {
 .formulario-cine .form-control:focus,
 .formulario-cine .form-select:focus { border-color: var(--color-primario); box-shadow: 0 0 0 .2rem var(--gris-claro); }
 .formulario-cine .form-check-input:checked { background-color: var(--color-primario); border-color: var(--color-primario); }
+
+/* Estadisticas (DataTables) */
+.contenedor-estadisticas { max-width: 900px; }
+.estrellas-tabla { letter-spacing: .1em; white-space: nowrap; }
